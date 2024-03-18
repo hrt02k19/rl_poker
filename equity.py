@@ -38,8 +38,6 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
             if s==i:
                 s_counter[s]=s_counter[s]+1
 
-    print(n_counter, s_counter)
-
     if max(s_counter)>=5:  #フラッシュ成立
         straight=0
         for i in range(13):
@@ -73,7 +71,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
         for i in range(15):
             if n_counter[i]==n_second:
                 n_second_id=i
-        return (3,id_4,n_second_id)
+        return (8,id_4,n_second_id)
     
     straight=0
     for i in range(13):
@@ -82,7 +80,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
         if n_counter[14-i]==0:
             straight=0
         if straight==5: #ストレート
-            return (6,14-i+4)
+            return (5,14-i+4)
             
             
     if max(n_counter)==3:   #3カード成立
@@ -100,7 +98,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
                         n_first_id=i
                 if n_counter[i]==2:
                     n_second_id=i
-            return (4,n_first_id,n_second_id)
+            return (7,n_first_id,n_second_id)
         
 
         else:   #3カード
@@ -116,7 +114,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
                     else:
                         n_third_id=n_second_id
                         n_second_id=i
-            return (7,n_first_id,n_second_id,n_third_id)
+            return (4,n_first_id,n_second_id,n_third_id)
         
     if max(n_counter)==2:
         n_counter_2=sorted(n_counter, reverse=True)
@@ -135,7 +133,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
                         n_first_id=i
                 if n_counter[i]==1:
                     n_third_id=i
-            return (8,n_first_id,n_second_id,n_third_id)
+            return (3,n_first_id,n_second_id,n_third_id)
         else:   #1ペア
             for i in range(15):
                 if n_counter[i]==2:
@@ -144,7 +142,7 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
                     n_fourth_id=n_third_id
                     n_third_id=n_second_id
                     n_second_id=i
-            return (9,n_first_id,n_second_id,n_third_id,n_fourth_id)
+            return (2,n_first_id,n_second_id,n_third_id,n_fourth_id)
 
     else:
         n_first_id=0
@@ -159,6 +157,21 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
                     n_third_id=n_second_id
                     n_second_id=n_first_id
                     n_first_id=i
-        return (10,n_first_id,n_second_id,n_third_id,n_fourth_id,n_fifth_id)
+        return (1,n_first_id,n_second_id,n_third_id,n_fourth_id,n_fifth_id)
 
-print(hand(0,5,10,15,20,25,30))
+def board_battle(board1,board2,board3,board4,board5,hero1,hero2,villain1,villain2):
+    hero_hand=hand(board1,board2,board3,board4,board5,hero1,hero2)
+    villain_hand=hand(board1,board2,board3,board4,board5,villain1,villain2)
+    print("hero:",card[hero1],card[hero2])
+    print("hero_hand:",hero_hand)
+    print("villain:",card[villain1],card[villain2])
+    print("villain_hand:",villain_hand)
+    print("board:",card[board1],card[board2],card[board3],card[board4],card[board5])
+    if hero_hand>villain_hand:
+        return 1
+    if hero_hand==villain_hand:
+        return 0
+    if hero_hand<villain_hand:
+        return -1
+
+print(board_battle(0,3,51,8,17,1,40,4,31))
