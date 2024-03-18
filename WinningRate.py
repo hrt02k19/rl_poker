@@ -1,3 +1,5 @@
+import itertools
+
 card=[]
 for i in range(13):
     for j in range(4):
@@ -162,16 +164,25 @@ def hand(c1,c2,c3,c4,c5,c6,c7):
 def board_battle(board1,board2,board3,board4,board5,hero1,hero2,villain1,villain2):
     hero_hand=hand(board1,board2,board3,board4,board5,hero1,hero2)
     villain_hand=hand(board1,board2,board3,board4,board5,villain1,villain2)
-    print("hero:",card[hero1],card[hero2])
-    print("hero_hand:",hero_hand)
-    print("villain:",card[villain1],card[villain2])
-    print("villain_hand:",villain_hand)
-    print("board:",card[board1],card[board2],card[board3],card[board4],card[board5])
     if hero_hand>villain_hand:
         return 1
     if hero_hand==villain_hand:
         return 0
     if hero_hand<villain_hand:
         return -1
+    
+def winning_rate(hero1,hero2,villain1,villain2):
+    battle_count=0
+    win_count=0
+    other=[]
+    for i in range(52):
+        if i!=hero1 and i!=hero2 and i!=villain1 and i!=villain2:
+            other.append(i)
+    for board in itertools.combinations(other,5):
+        if board_battle(board[0],board[1],board[2],board[3],board[4],hero1,hero2,villain1,villain2)==1:
+            win_count+=1
+        battle_count+=1
+        print(win_count,battle_count)
+    return("WinningRate=",win_count/battle_count*100,"%")
 
-print(board_battle(0,3,51,8,17,1,40,4,31))
+print(winning_rate(0,5,16,17))
